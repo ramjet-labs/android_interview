@@ -1,0 +1,12 @@
+package io.mx51.androidinterview.domain
+
+abstract class UseCase<in UseCaseParams, out UseCaseResult> {
+
+    abstract suspend fun run(params: UseCaseParams): UseCaseResult
+
+    suspend operator fun invoke(
+        params: UseCaseParams
+    ): UseCaseResult {
+        return run(params)
+    }
+}
