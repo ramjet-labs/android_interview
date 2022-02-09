@@ -9,8 +9,11 @@ This project is a basic weather app, it fetches data from an existing endpoint a
 
 There are 3 tasks to be completed as part of this test.
 1. Add a second weather endpoint, that should be used as a fail-over if the first endpoint returns an error.  
-   Endpoint #2 - http://api.weatherstack.com/current?access_key=8c2158e0e46f9e948b6f2efb261a6381&query=Sydney
-1. Update the UI to include a way to change the display of temperature between celsius and fahrenheit.
+   * Endpoint #2 - WeatherStack  
+   * Find the docs and a link for a free account here (https://weatherstack.com/documentation)
+1. Update the UI to include a way to:-
+   * Change temperature between celsius and fahrenheit  
+   * Change wind speed between m/s and knots.
 1. Add unit & UI tests as appropriate.
 
 The amount of time you should allocate to this test should be no more than 6hrs.
