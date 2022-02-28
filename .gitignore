@@ -10,6 +10,9 @@
 # Java class files
 *.class
 
+# Apple meta files
+*/.DS_Store
+
 # Generated files
 bin/
 gen/
