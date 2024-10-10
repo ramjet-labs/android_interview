@@ -3,6 +3,8 @@ package io.mx51.androidinterview.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.mx51.androidinterview.data.model.WeatherDetails
+import io.mx51.androidinterview.data.model.WeatherPreference
+import io.mx51.androidinterview.data.model.WeatherUnit
 import io.mx51.androidinterview.domain.GetWeatherDetailsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,12 +14,20 @@ class WeatherViewModel(
     private val getWeatherDetailsUseCase: GetWeatherDetailsUseCase
 ): ViewModel() {
 
-    private val _weatherDetails: MutableStateFlow<WeatherDetails?> = MutableStateFlow(null)
-    val weatherDetails = _weatherDetails.asStateFlow()
+    val weatherDetails: MutableStateFlow<WeatherDetails?> = MutableStateFlow(null)
+    val weatherPreference: MutableStateFlow<WeatherPreference> = MutableStateFlow(WeatherPreference())
 
     fun getWeatherDetails() {
         viewModelScope.launch {
-            _weatherDetails.value = getWeatherDetailsUseCase(Unit)
+            weatherDetails.value = getWeatherDetailsUseCase(
+                weatherPreference.value.weatherUnit
+            )
+        }
+    }
+
+    fun setWeatherUnit(weatherUnit: WeatherUnit) {
+        viewModelScope.launch {
+            weatherPreference.value.weatherUnit = weatherUnit
         }
     }
 }
