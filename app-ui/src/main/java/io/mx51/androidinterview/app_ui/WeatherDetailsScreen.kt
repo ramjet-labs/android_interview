@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.mx51.androidinterview.app_ui.theme.AndroidInterviewTheme
 import io.mx51.app_ui.R
+import io.mx51.androidinterview.data.model.WeatherUnit
 
 @Composable
 fun WeatherDetailsScreen(
@@ -23,7 +24,10 @@ fun WeatherDetailsScreen(
     temperature: Double,
     windSpeed: Double,
     description: String,
-    onRefreshClicked: () -> Unit
+    metricUnit: WeatherUnit,
+    onRefreshClicked: () -> Unit,
+    onMetricClicked: () -> Unit,
+    onImperialClicked: () -> Unit
 ) {
     AndroidInterviewTheme {
         Surface(
@@ -51,13 +55,21 @@ fun WeatherDetailsScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = stringResource(R.string.temperature_label, temperature),
+                            text = if (metricUnit == WeatherUnit.METRIC) {
+                                stringResource(R.string.temperature_label_celsius, temperature)
+                            } else {
+                                stringResource(R.string.temperature_label_fahrenheit, temperature)
+                            },
                             modifier = Modifier.padding(top = 5.dp),
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 30.sp,
                         )
                         Text(
-                            text = stringResource(R.string.wind_label, windSpeed),
+                            text = if (metricUnit == WeatherUnit.METRIC) {
+                                stringResource(R.string.wind_label_metric, windSpeed)
+                            } else {
+                                stringResource(R.string.wind_label_imperial, windSpeed)
+                            },
                             modifier = Modifier.padding(top = 2.dp),
                             fontSize = 18.sp,
                         )
@@ -68,6 +80,19 @@ fun WeatherDetailsScreen(
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
                     )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Button(onClick = onMetricClicked) {
+                        Text(text = "Metric")
+                    }
+                    Button(onClick = onImperialClicked) {
+                        Text(text = "Imperial")
+                    }
                 }
                 Button(
                     onClick = onRefreshClicked,
@@ -94,7 +119,10 @@ fun WeatherDetailsScreenPreview() {
             windSpeed = 2.57,
             description = "Sunny",
             locationName = "Sydney",
-            onRefreshClicked = { }
+            metricUnit = WeatherUnit.METRIC,
+            onRefreshClicked = { },
+            onMetricClicked = { },
+            onImperialClicked = { }
         )
     }
 }
